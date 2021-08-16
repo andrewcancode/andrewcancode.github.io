@@ -68,7 +68,6 @@ const $gameCountMobile = $('<h3>').addClass('gameCountMobile');
 const isMobileUser = window.matchMedia('(max-width: 600px)');
 if (isMobileUser.matches) {
     $('.tallyDiv').css({ 'display': 'none' });
-    // const $gameCountMobile = $('<h3>').addClass('gameCountMobile'); // had to move out of this conditional to allow it to be updated
     $gameCountMobile.text(`X: ${gameObject.numWinsX} \t O: ${gameObject.numWinsO}`).css({ 'text-align': 'center', 'margin': 'auto', 'font-size': '24px' });
     $newGameBtn.css({ 'border': '1px solid black', 'width': '120px', 'height': '30px', 'font-size': '18px', 'padding-top': '0 px', 'margin-bottom': '30px', 'margin-top': '20px' })
     $('body').css({ 'text-align': 'center' })
@@ -91,11 +90,6 @@ const newGame = () => {
     $gameStatus.html(`The current player is: ${gameObject.currentTurn}`);
 }
 
-// $newGameBtn.on('click', (btn) => {
-//     btn.preventDefault();
-//     newGame();
-// })
-
 $('.newGameBtn').on('click', (btn) => {
     btn.preventDefault();
     newGame();
@@ -107,10 +101,6 @@ const checkGameStatus = () => {
         let box1 = gameObject.tilesMarked[winStates[i][0]]; 
         let box2 = gameObject.tilesMarked[winStates[i][1]];
         let box3 = gameObject.tilesMarked[winStates[i][2]];
-        // console.log('box 1' + box1);
-        // console.log('box 2' + box2);
-        // console.log('box 3' + box3);
-        // console.log(gameObject.tilesMarked);
 
         if (box1 === '' || box2 === '' || box3 === '') {
             continue;
@@ -132,13 +122,12 @@ const checkGameStatus = () => {
         $li1.text(`X: ${gameObject.numWinsX}`);
         $li2.text(`O: ${gameObject.numWinsO}`);
         $gameCountMobile.text(`X: ${gameObject.numWinsX} \t O: ${gameObject.numWinsO}`);
-        return;   // add something about restarting game, maybe with something that will keep a win tally?
+        return;
     }
 
     if (gameObject.tilesMarked.includes('') === false) {
         gameObject.isDraw = true;
         $gameStatus.html('The game has ended in a draw');
-        // add something about restarting game, maybe with something that will keep a win tally?
     }
 
     if (gameObject.currentTurn === 'X' && gameObject.isDraw === false) {
@@ -153,21 +142,10 @@ const checkGameStatus = () => {
 $('.box').on('click', (box) => {
     box.preventDefault();
     let clickIndex = parseInt(box.target.getAttribute('id'));
-    if (gameObject.hasWon === false && box.target.innerHTML === "") { // this needs work... 
-        // console.log(box.target)
+    if (gameObject.hasWon === false && box.target.innerHTML === "") { 
         box.target.innerHTML = gameObject.currentTurn;
         gameObject.tilesMarked[clickIndex] = gameObject.currentTurn;
-        checkGameStatus();
-        // gameObject.currentTurn = 'O';
-        // $gameStatus.html(`The current player is: ${gameObject.currentTurn}`);
-        
-    // } else if (gameObject.currentTurn === 'O' && box.target.innerHTML === "") {
-    //     box.target.innerHTML = gameObject.currentTurn;
-    //     gameObject.tilesMarked[clickIndex] = gameObject.currentTurn;
-    //     checkGameStatus();
-        // gameObject.currentTurn = 'X';
-        // $gameStatus.html(`The current player is: ${gameObject.currentTurn}`);
-        
+        checkGameStatus();       
     } else {
         return
     };
