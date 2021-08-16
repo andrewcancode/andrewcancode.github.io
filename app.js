@@ -75,7 +75,7 @@ if (isMobileUser.matches) {
     $('.gameStatus').css({ 'margin': '5px' })
     $('.container').css({ 'margin': '5px auto' })
     $('.container').css({ 'width': '324px', 'height': '324px', 'border': '4px solid dimgrey' })
-    $('.box').css({'width': '100px', 'height': '100px', 'border': '4px solid dimgray', 'margin': '0px'})
+    $('.box').css({'width': '100px', 'height': '100px', 'border': '4px solid dimgrey', 'margin': '0px'})
     $('body').append($gameCountMobile);
     $('body').append($newGameBtn);
 }
