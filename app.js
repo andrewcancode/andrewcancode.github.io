@@ -61,7 +61,24 @@ $container.append($tallyDiv);
 $('body').append($container);
 $('body').append($gameStatus);
 
+// adding mobile functionality
 
+const $gameCountMobile = $('<h3>').addClass('gameCountMobile');
+
+const isMobileUser = window.matchMedia('(max-width: 600px)');
+if (isMobileUser.matches) {
+    $('.tallyDiv').css({ 'display': 'none' });
+    // const $gameCountMobile = $('<h3>').addClass('gameCountMobile'); // had to move out of this conditional to allow it to be updated
+    $gameCountMobile.text(`X: ${gameObject.numWinsX} \t O: ${gameObject.numWinsO}`).css({ 'text-align': 'center', 'margin': 'auto', 'font-size': '24px' });
+    $newGameBtn.css({ 'border': '1px solid black', 'width': '120px', 'height': '30px', 'font-size': '18px', 'padding-top': '0 px', 'margin-bottom': '30px', 'margin-top': '20px' })
+    $('body').css({ 'text-align': 'center' })
+    $('.gameStatus').css({ 'margin': '5px' })
+    $('.container').css({ 'margin': '5px auto' })
+    $('.container').css({ 'width': '324px', 'height': '324px', 'border': '4px solid dimgrey' })
+    $('.box').css({'width': '100px', 'height': '100px', 'border': '4px solid dimgray', 'margin': '0px'})
+    $('body').append($gameCountMobile);
+    $('body').append($newGameBtn);
+}
 
 // initializing variables that will be needed
 
