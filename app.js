@@ -1,5 +1,7 @@
 // working tic tac toe game
 // to possibly add in future?  option to play vs. computer
+// 08-17 - added computer play functionality! and it even works!
+// not perfect .. may update it a bit
 
 console.log('JS connected!');
 
@@ -11,7 +13,8 @@ const gameObject = {
     tilesMarked: ['', '', '', '', '', '', '', '', ''], // this array will keep track of the game progress
     numWinsX: 0,
     numWinsO: 0,
-    isDraw: false
+    isDraw: false,
+    isComp: false
 }
 
 const winStates = [ // these are all the scenarios in which one can win the game by box div id
@@ -64,15 +67,29 @@ $container.append($tallyDiv);
 $('body').append($container);
 $('body').append($gameStatus);
 
+$('.container').css({ 'display': 'none' });
+$('.gameStatus').css({ 'display': 'none'});
+$newGameBtn.css({ 'display': 'none' });
+
+$chooseDiv = $('<div>').addClass('chooseDiv');
+$humanBtn = $('<input type="submit" value="vs. Human" class="chooseBtn" />');
+$compBtn = $('<input type="submit" value="vs. Computer" class="chooseBtn" />');
+
+$($chooseDiv).append($humanBtn);
+$($chooseDiv).append($compBtn);
+$('body').append($chooseDiv);
+
 // adding mobile functionality
 
 const $gameCountMobile = $('<h3>').addClass('gameCountMobile');
+
+$gameCountMobile.css({ 'display': 'none' });
 
 const isMobileUser = window.matchMedia('(max-width: 600px)');
 if (isMobileUser.matches) {
     $('.tallyDiv').css({ 'display': 'none' });
     $gameCountMobile.text(`X: ${gameObject.numWinsX} \t O: ${gameObject.numWinsO}`).css({ 'text-align': 'center', 'margin': 'auto', 'font-size': '24px' });
-    $newGameBtn.css({ 'border': '1px solid black', 'width': '120px', 'height': '30px', 'font-size': '18px', 'padding-top': '0 px', 'margin-bottom': '30px', 'margin-top': '20px' })
+    $newGameBtn.css({ 'text-align': 'center', 'border': '1px solid black', 'width': '120px', 'height': '30px', 'font-size': '18px', 'padding-top': '0 px', 'margin-bottom': '30px', 'margin-top': '20px' })
     $('body').css({ 'text-align': 'center' })
     $('.gameStatus').css({ 'margin': '5px' })
     $('.container').css({ 'margin': '5px auto' })
@@ -144,7 +161,23 @@ $('.box').on('click', (box) => { // this is for the box divs that make the tic t
     if (gameObject.hasWon === false && box.target.innerHTML === "") { 
         box.target.innerHTML = gameObject.currentTurn;
         gameObject.tilesMarked[clickIndex] = gameObject.currentTurn;
-        checkGameStatus();       
+        checkGameStatus();      
+        if (gameObject.isComp === true && gameObject.hasWon === false) {   // added play vs computer functionality!!
+            const openTiles = gameObject.tilesMarked.reduce((arr, e, i) => { // use a reducer function to grab an array of all index values of the
+                if (e !== "X" && e !== "O") {                               // tilesMarked index that are open spaces and store in a variable
+                    arr.push(i);
+                };
+                return arr;
+            }, []);
+            
+            const randomMove = () => {
+                const compMove =  openTiles[Math.floor(Math.random() * openTiles.length)]; // use above openTiles var to create our random move!
+                document.getElementById(compMove).innerText = gameObject.currentTurn;      // ... and add it to our DOM
+                gameObject.tilesMarked[compMove] = gameObject.currentTurn;                 // ... and add it as a new marked tile!
+            };
+            randomMove();                                                                  // call the function
+        checkGameStatus();                                                                 // and back thru the big game function we go!
+        } 
     } else {
         return
     };
@@ -155,6 +188,21 @@ $('.newGameBtn').on('click', (btn) => {
     newGame();
 });
 
-$(() => {
+$($humanBtn).on('click', (btn) => {
+    btn.preventDefault();
+    $chooseDiv.css({ 'display': 'none' });
+    $('.container').css({ 'display': 'grid' });
+    $('.gameStatus').css({ 'display': 'inherit' });
+    $newGameBtn.css({ 'display': 'inherit' });
+    $gameCountMobile.css({ 'display': 'inherit' });
+});
 
-})
+$($compBtn).on('click', (btn) => {
+    btn.preventDefault();
+    $chooseDiv.css({ 'display': 'none' });
+    $('.container').css({ 'display': 'grid' });
+    $('.gameStatus').css({ 'display': 'inherit' });
+    $newGameBtn.css({ 'display': 'unset' });
+    $gameCountMobile.css({ 'display': 'inherit' });
+    gameObject.isComp = true;
+});
