@@ -1,15 +1,11 @@
 body {
-    background-color: dodgerblue;
+    background-color: dodgerblue
 }
 
 body h1 {
     text-align: center;
     font-weight: bold;
     font-family: 'Courier New', Courier, monospace;
-    /* border: solid black 1px;
-    border-right: 0px;
-    border-left: 0px; */
-    display:
 }
 
 body h2 {
