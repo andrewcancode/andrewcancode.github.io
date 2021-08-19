@@ -47,11 +47,9 @@ Work with your instructor to determine additional stretch goals
 Improve computer algorithm - maybe add option to choose difficulty?
 
 ## Built With
-​
 * [jQuery](https://code.jquery.com/) - The JS Library used
 
 ## Authors
-​
 * **Andrew Lee** - [andrewcancode](https://github.com/andrewcancode)
 ​
 ## License
