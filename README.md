@@ -2,7 +2,7 @@
 
 I built a simple Tic Tac Toe game in javascript / jQuery / HTML / CSS that can be played in the browser with either two people, or one person vs. a computer.
 
-Please visit to play: https://github.com/andrewcancode/tictactoe.git
+Please visit to play: https://andrewcancode.github.io/tictactoe/
 
 ## Wireframe:
 [wireframe](wireframe.png)
