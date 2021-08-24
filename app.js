@@ -93,7 +93,11 @@ $gameCountMobile.css({ 'display': 'none' });
 const isMobileUser = window.matchMedia('(max-width: 600px)');
 if (isMobileUser.matches) {
     $('.tallyDiv').css({ 'display': 'none' });
-    $gameCountMobile.text(`X: ${gameObject.numWinsX} \t O: ${gameObject.numWinsO}`).css({ 'text-align': 'center', 'margin': 'auto', 'font-size': '24px' });
+    if (!gameObject.isComp) {
+        $gameCountMobile.text(`X: ${gameObject.numWinsX} \t O: ${gameObject.numWinsO}`).css({ 'text-align': 'center', 'margin': 'auto', 'font-size': '24px' });
+    } else {
+        $gameCountMobile.text(`You: ${gameObject.numWinsX} \t Computer: ${gameObject.numWinsO}`);
+    }
     $newGameBtn.css({ 'text-align': 'center', 'border': '1px solid black', 'width': '120px', 'height': '30px', 'font-size': '18px', 'padding-top': '0 px', 'margin-bottom': '30px', 'margin-top': '20px' })
     $('body').css({ 'text-align': 'center' })
     $('.gameStatus').css({ 'margin': '5px' })
@@ -111,7 +115,12 @@ const newGame = () => {
     $('.box').html('');                                            // ...  and as displayed on the DOM
     gameObject.hasWon = false;
     gameObject.isDraw = false;
-    gameObject.currentTurn === 'X' ? gameObject.currentTurn = 'O' : gameObject.currentTurn = 'X';
+    // trying new thing - 
+    if (!gameObject.isComp) {
+        gameObject.currentTurn === 'X' ? gameObject.currentTurn = 'O' : gameObject.currentTurn = 'X';
+    } else {
+        gameObject.currentTurn = 'X';
+    }
     $gameStatus.html(`The current player is: ${gameObject.currentTurn}`);
 }
 
@@ -138,10 +147,18 @@ const checkGameStatus = () => { // core game ~mega function~ - runs after every 
         } else {
             gameObject.numWinsO++;
         }
-        $li1.text(`X: ${gameObject.numWinsX}`);
-        $li2.text(`O: ${gameObject.numWinsO}`);
-        $gameCountMobile.text(`X: ${gameObject.numWinsX} \t O: ${gameObject.numWinsO}`); // dont forget mobile users!
-        return;
+        // trying new thing
+        if (!gameObject.isComp) {
+            $li1.text(`X: ${gameObject.numWinsX}`);
+            $li2.text(`O: ${gameObject.numWinsO}`);
+            $gameCountMobile.text(`X: ${gameObject.numWinsX} \t O: ${gameObject.numWinsO}`); // dont forget mobile users!
+            return;
+        } else {
+            $li1.text(`You: ${gameObject.numWinsX}`);
+            $li2.text(`Computer: ${gameObject.numWinsO}`);
+            $gameCountMobile.text(`You: ${gameObject.numWinsX} \t Computer: ${gameObject.numWinsO}`); // dont forget mobile users!
+            return;
+        }
     }
 
     if (gameObject.tilesMarked.includes('') === false) { // logic to handle draw scenario - if all tiles are marked but none has triggered the win 
@@ -196,9 +213,9 @@ $('.newGameBtn').on('click', (btn) => {
 $($humanBtn).on('click', (btn) => {
     btn.preventDefault();
     $chooseDiv.css({ 'display': 'none' });
-    $('.container').css({ 'display': 'grid' });
+    $('.container').css({ 'display': 'grid'});
     $('.gameStatus').css({ 'display': 'inherit' });
-    $newGameBtn.css({ 'display': 'inherit' });
+    $newGameBtn.css({ 'display': 'unset' });
     $gameCountMobile.css({ 'display': 'inherit' });
 });
 
@@ -210,6 +227,11 @@ $($compBtn).on('click', (btn) => {
     $newGameBtn.css({ 'display': 'unset' });
     $gameCountMobile.css({ 'display': 'inherit' });
     gameObject.isComp = true;
+    // trying new thing
+    $li1.text(`You: ${gameObject.numWinsX}`).css({ 'font-size': '32px' });
+    $li2.text(`Computer: ${gameObject.numWinsO}`).css({ 'font-size': '32px', 'padding-left': '15px' });
+    $gameCountMobile.text(`You: ${gameObject.numWinsX} \t Computer: ${gameObject.numWinsO}`);
+    $tallyDiv.css({ 'height': 'auto'})
 });
 
 })
