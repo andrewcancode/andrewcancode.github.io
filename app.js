@@ -30,6 +30,8 @@ const winStates = [ // these are all the scenarios in which one can win the game
 
 // building the DOM elements with jQuery
 
+$(() => {
+
 const $container = $('<div>').addClass('container');
 
 const $gameStatus = $('<h2>').addClass('gameStatus');
@@ -78,6 +80,9 @@ $compBtn = $('<input type="submit" value="vs. Computer" class="chooseBtn" />');
 $($chooseDiv).append($humanBtn);
 $($chooseDiv).append($compBtn);
 $('body').append($chooseDiv);
+
+$footerDiv = $('<footer>').text('Created for the Mod-1 Project by Andrew Lee ');
+$('body').append($footerDiv);
 
 // adding mobile functionality
 
@@ -206,3 +211,5 @@ $($compBtn).on('click', (btn) => {
     $gameCountMobile.css({ 'display': 'inherit' });
     gameObject.isComp = true;
 });
+
+})
