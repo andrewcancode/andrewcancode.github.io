@@ -38,8 +38,11 @@ Multiple rounds to play - a round must begin, end, and there must be a way to ch
 Recommended Features
 
 A way to reset the board and play again 
+
 CSS to give your game a personal and fun style 
+
 Responsive mobile design 
+
 Work with your instructor to determine additional stretch goals
 
 ## Post MVP - to improve
